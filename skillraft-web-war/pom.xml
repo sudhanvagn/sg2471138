@@ -57,7 +57,7 @@
 		</dependency>
 
 		<!-- Test Dependencies -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
 			<version>${appengine.target.version}</version>
@@ -68,10 +68,11 @@
 			<artifactId>appengine-api-stubs</artifactId>
 			<version>${appengine.target.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
+		<finalName>Skillraft</finalName>
 		<outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 
 		<plugins>
