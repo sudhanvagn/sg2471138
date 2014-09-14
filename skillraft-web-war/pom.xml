@@ -74,10 +74,35 @@
 	<build>
 		<finalName>Skillraft</finalName>
 		<outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
-
+		
 		<plugins>
+			 <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-enforcer-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <message>You are running an older version of Maven. Skillraft requires at least Maven 3.0</message>
+                                    <version>[3.0.0,)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <message>You are running an older version of Java. Skillraft requires at least JDK 1.7</message>
+                                    <version>[1.7.0,)</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 			<!-- Unplug when EAR to be executed -->
-			<plugin>
+			 <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<version>2.5.1</version>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -85,7 +110,7 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
-			</plugin>
+			</plugin> 
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -109,7 +134,7 @@
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.target.version}</version>
-            </plugin>
+            </plugin> 
 		</plugins>
 	</build>
 
