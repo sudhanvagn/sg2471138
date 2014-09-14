@@ -12,3 +12,8 @@ out
 .classpath
 .project
 .springBeans
+.sass-cache/
+.tmp/
+node_modules/
+vendor/
+skillraft-web/skillraft-web-war/
