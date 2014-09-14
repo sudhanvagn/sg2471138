@@ -17,3 +17,4 @@ out
 node_modules/
 vendor/
 skillraft-web/skillraft-web-war/
+/dist/
