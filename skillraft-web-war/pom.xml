@@ -86,16 +86,51 @@
 										requires at least Maven 3.0</message>
 									<version>[3.0.0,)</version>
 								</requireMavenVersion>
-								<requireJavaVersion>
-									<message>You are running an older version of Java. Skillraft
-										requires at least JDK 1.7</message>
-									<version>[1.7.0,)</version>
-								</requireJavaVersion>
+								<!-- <requireJavaVersion> <message>You are running an older version 
+									of Java. Skillraft requires at least JDK 1.7</message> <version>[1.7.0,)</version> 
+									</requireJavaVersion> -->
 							</rules>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>com.github.trecloux</groupId>
+				<artifactId>yeoman-maven-plugin</artifactId>
+				<version>0.2</version>
+				<configuration>
+					<yeomanProjectDirectory>${project.basedir}</yeomanProjectDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>run-grunt</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+						<configuration>
+							<gruntBuildArgs>--force</gruntBuildArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/webapp/app/vendor</directory>
+						</fileset>
+						<fileset>
+							<directory>.tmp</directory>
+						</fileset>
+						<!-- <fileset> <directory>node_modules</directory> </fileset> -->
+					</filesets>
+				</configuration>
+			</plugin>
+
 			<!-- Unplug when EAR to be executed -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -120,7 +155,11 @@
 							<filtering>true</filtering>
 							<targetPath>WEB-INF</targetPath>
 						</resource>
+						<resource>
+							<directory>dist</directory>
+						</resource>
 					</webResources>
+					<warSourceExcludes>app/**</warSourceExcludes>
 				</configuration>
 			</plugin>
 
@@ -131,6 +170,36 @@
 				<version>${appengine.target.version}</version>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.trecloux</groupId>
+										<artifactId>yeoman-maven-plugin</artifactId>
+										<versionRange>[0.2,)</versionRange>
+										<goals>
+											<goal>build</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>

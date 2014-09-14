@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     // configurable paths
     var yeomanConfig = {
         app: require('./bower.json').appPath || 'src/main/webapp/app',
-        dist: 'src/main/webapp/dist',
+        dist: 'dist',
         test: 'src/test/javascript',
         base:'src/main/webapp'
     };
@@ -163,9 +163,9 @@ module.exports = function (grunt) {
                     optimize: 'none',
                     paths: {
                         'templates': '../../.tmp/scripts/templates',
-                        'jquery': '../../<%= yeoman.app %>/vendor/jquery/dist/jquery',
-                        'underscore': '../../<%= yeoman.app %>/vendor/lodash/dist/lodash',
-                        'backbone': '../../<%= yeoman.app %>/vendor/backbone/backbone'
+                        'jquery': '../vendor/jquery/dist/jquery',
+                        'underscore': '../vendor/lodash/dist/lodash',
+                        'backbone': '../vendor/backbone/backbone'
                     },
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
@@ -196,9 +196,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= yeoman.app %>/images',
+                    cwd: '<%= yeoman.app %>/app/images',
                     src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%= yeoman.dist %>/images'
+                    dest: '<%= yeoman.dist %>/dist/images'
                 }]
             }
         },
@@ -245,7 +245,8 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',
-                        'vendor/sass-bootstrap/fonts/*.*'
+                        'vendor/sass-bootstrap/fonts/*.*',
+                        'vendor/{,*/}*.*'
                     ]
                 }]
             }
@@ -329,7 +330,7 @@ module.exports = function (grunt) {
             ];
 
         if(!isConnected) {
-            return grunt.task.run(testTasks);
+//            return grunt.task.run(testTasks);
         } else {
             // already connected so not going to connect again, remove the connect:test task
             testTasks.splice(testTasks.indexOf('connect:test'), 1);
@@ -353,10 +354,9 @@ module.exports = function (grunt) {
         'rev',
         'usemin'
     ]);
-
+    
     grunt.registerTask('default', [
-        'jshint',
-        'test',
+//        'test',
         'build'
     ]);
 };

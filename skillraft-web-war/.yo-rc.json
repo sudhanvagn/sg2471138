@@ -1,0 +1,15 @@
+{
+  "generator-skillraft": {
+    "packageName": "com.sg.skillraft",
+    "packageFolder": "com/sg/skillraft",
+    "baseName": "jhipster",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "useCompass": false,
+    "javaVersion": "7",
+    "databaseType": "sql",
+    "frontendBuilder": "grunt",
+    "buildTool": "maven"
+  }
+}
