@@ -69,6 +69,49 @@
 		<outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 
 		<plugins>
+			
+				<!-- Plugin for Jenkins to install Node.js -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>exec-gen-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target name="Build Web">
+
+								<echo>--- NPM INSTALL ---</echo>
+
+								<exec executable="cmd" dir="${project.basedir}"
+									failonerror="true" osfamily="windows">
+									<arg line="/c npm install" />
+								</exec>
+
+								<echo>--- BOWER INSTALL ---</echo>
+
+								<exec executable="cmd" dir="${project.basedir}"
+									failonerror="true" osfamily="windows">
+									<arg line="/c bower install --no-color" />
+								</exec>
+
+								<echo>--- GRUNT RELEASE ---</echo>
+
+								<exec executable="cmd" dir="${project.basedir}"
+									failonerror="true" osfamily="windows">
+									<arg line="/c grunt release --no-color --force" />
+								</exec>
+
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
@@ -188,6 +231,25 @@
 										<versionRange>[0.2,)</versionRange>
 										<goals>
 											<goal>build</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-antrun-plugin
+										</artifactId>
+										<versionRange>
+											[1.5,)
+										</versionRange>
+										<goals>
+											<goal>run</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
