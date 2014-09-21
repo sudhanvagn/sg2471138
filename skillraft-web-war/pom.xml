@@ -124,6 +124,9 @@
 							<directory>src/main/webapp/app/vendor</directory>
 						</fileset>
 						<fileset>
+							<directory>dist</directory>
+						</fileset>
+						<fileset>
 							<directory>.tmp</directory>
 						</fileset>
 						<!-- <fileset> <directory>node_modules</directory> </fileset> -->

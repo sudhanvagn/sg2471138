@@ -34,10 +34,15 @@ module.exports = function (grunt) {
                 nospawn: true,
                 livereload: true
             },
-            compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
-            },
+//            Uncomment to use SASS
+//            compass: {
+//                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+//                tasks: ['compass']
+//            },
+            less: {
+                files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
+                tasks: ['less']
+             },
             livereload: {
                 options: {
                     livereload: grunt.option('livereloadport') || LIVERELOAD_PORT
@@ -138,23 +143,37 @@ module.exports = function (grunt) {
                 }
             }
         },
-        compass: {
-            options: {
-                sassDir: '<%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%= yeoman.app %>/images',
-                javascriptsDir: '<%= yeoman.app %>/scripts',
-                fontsDir: '<%= yeoman.app %>/styles/fonts',
-                importPath: '<%= yeoman.app %>/vendor',
-                relativeAssets: true
-            },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
+//        compass: {
+//            options: {
+//                sassDir: '<%= yeoman.app %>/styles',
+//                cssDir: '.tmp/styles',
+//                imagesDir: '<%= yeoman.app %>/images',
+//                javascriptsDir: '<%= yeoman.app %>/scripts',
+//                fontsDir: '<%= yeoman.app %>/styles/fonts',
+//                importPath: '<%= yeoman.app %>/vendor',
+//                relativeAssets: true
+//            },
+//            dist: {},
+//            server: {
+//                options: {
+//                    debugInfo: true
+//                }
+//            }
+//        },
+        less: {
+            dist: {
+              files: {
+                '.tmp/styles/main.css': ['<%= yeoman.app %>/styles/main.less'],
+                '.tmp/styles/main.css.map': ['<%= yeoman.app %>/styles/main.less']
+              },
+              options: {
+                sourceMap: true,
+                sourceMapFilename: '.tmp/styles/main.css.map',
+                sourceMapBasepath: '<%= yeoman.app %>/',
+                sourceMapRootpath: '/'
+              }
             }
-        },
+          },
         requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -278,7 +297,15 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        }
+        },
+        //Enable this for less
+        concurrent: {
+            dist: [
+              'less',
+              'imagemin',
+              'htmlmin'
+            ]
+       }
     });
 
     grunt.registerTask('createDefaultTemplate', function () {
@@ -300,7 +327,8 @@ module.exports = function (grunt) {
                 'clean:server',
                 'createDefaultTemplate',
                 'jst',
-                'compass:server',
+//                'compass:server',
+                'less',
                 'connect:test',
                 'open:test',
                 'watch'
@@ -311,7 +339,8 @@ module.exports = function (grunt) {
             'clean:server',
             'createDefaultTemplate',
             'jst',
-            'compass:server',
+//            'compass:server',
+            'less',
             'connect:livereload',
             'open:server',
             'watch'
@@ -324,7 +353,8 @@ module.exports = function (grunt) {
                 'clean:server',
                 'createDefaultTemplate',
                 'jst',
-                'compass',
+//                'compass',
+                'less',
                 'connect:test',
                 'mocha',
             ];
@@ -342,7 +372,8 @@ module.exports = function (grunt) {
         'clean:dist',
         'createDefaultTemplate',
         'jst',
-        'compass:dist',
+//        'compass:dist',
+        'concurrent',
         'useminPrepare',
         'requirejs',
         'imagemin',
