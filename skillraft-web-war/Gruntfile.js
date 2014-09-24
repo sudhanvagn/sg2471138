@@ -23,11 +23,11 @@ module.exports = function (grunt) {
     var yeomanConfig = {
         app: require('./bower.json').appPath || 'src/main/webapp/app',
         dist: 'dist',
-        test: 'src/test/javascript',
+        test: 'src/test',
         base:'src/main/webapp'
     };
 
-    grunt.initConfig({
+    grunt.initConfig({     
         yeoman: yeomanConfig,
         watch: {
             options: {
@@ -53,7 +53,7 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
                     '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
-                    '<%= yeoman.test %>/spec/**/*.js'
+                    '<%= yeoman.test %>/javascript/**/*.js'
                 ]
             },
             jst: {
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
                 tasks: ['jst']
             },
             test: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '<%= yeoman.test %>/spec/**/*.js'],
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '<%= yeoman.test %>/javascript/**/*.js'],
                 tasks: ['test:true']
             }
         },
@@ -96,8 +96,9 @@ module.exports = function (grunt) {
                         return [
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test'),
-                            mountFolder(connect, yeomanConfig.app)
+                            mountFolder(connect, '.'),
+                            mountFolder(connect, yeomanConfig.app),
+                            mountFolder(connect, yeomanConfig.test)
                         ];
                     }
                 }
@@ -139,7 +140,7 @@ module.exports = function (grunt) {
             all: {
                 options: {
                     run: true,
-                    urls: ['http://localhost:<%= connect.test.options.port %>/<%= yeoman.app %>/index.html']
+                    urls: ['http://localhost:<%= connect.test.options.port %>/<%= yeoman.test %>/js-resources/index.html']
                 }
             }
         },
